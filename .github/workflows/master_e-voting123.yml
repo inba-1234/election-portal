@@ -19,7 +19,7 @@ jobs:
       - name: Set up Node.js 22
         uses: actions/setup-node@v3
         with:
-          node-version: '22.x'
+          node-version: '22'
 
       # Install backend dependencies
       - name: Install backend dependencies
@@ -57,11 +57,12 @@ jobs:
           path: .
 
       - name: Login to Azure
-        uses: azure/login@v2
+        uses: azure/login@v1.4.6 # Revert to a stable version of the action
         with:
           client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_89249204187B4C9996E280FC501ED369 }}
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_EE51181A966640D6A7F57951597C203F }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_93C577B3791C461EB23E971B9BD826EA }}
+          # enable-oidc is not an input for v1.x and was invalid for v2
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
