@@ -22,11 +22,10 @@ app.use('/api/auth', require('./routes/auth'));
 app.use('/api/elections', require('./routes/elections'));
 app.use('/api/votes', require('./routes/votes'));
 
-// ✅ Serve React build files
-app.use(express.static(path.join(__dirname, '../frontend/build')));
+app.use(express.static(path.join(__dirname, 'build')));
 
 app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../frontend/build', 'index.html'));
+  res.sendFile(path.resolve(__dirname, 'build', 'index.html'));
 });
 
 const PORT = process.env.PORT || 5000;
