@@ -47,6 +47,7 @@ jobs:
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
 
+
       # 7️⃣ Deploy backend (with React build) to Azure Web App
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
