@@ -23,27 +23,27 @@ jobs:
       # Install and build React frontend
       - name: Install and build frontend
         run: |
-          cd election-portal/frontend
+          cd frontend
           npm install
           npm run build
 
       # Install backend dependencies
       - name: Install backend dependencies
         run: |
-          cd election-portal/backend
+          cd backend
           npm install
 
       # Copy frontend build into backend folder
       - name: Copy frontend build to backend
         run: |
-          cp -r election-portal/frontend/build election-portal/backend/
+          cp -r frontend/build backend/
 
-      # Upload backend as artifact for deployment
+      # Upload backend (with build folder) for deployment
       - name: Upload artifact for deployment
         uses: actions/upload-artifact@v4
         with:
           name: node-app
-          path: election-portal/backend
+          path: backend
 
   deploy:
     runs-on: ubuntu-latest
