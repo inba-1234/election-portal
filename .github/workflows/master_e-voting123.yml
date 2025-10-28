@@ -11,35 +11,43 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # 1️⃣ Checkout repo
       - uses: actions/checkout@v4
 
+      # 2️⃣ Set Node.js version
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '22.x'
 
-      - name: Install frontend and build
+      # 3️⃣ Install frontend dependencies and build React app
+      - name: Install and build frontend
         run: |
           cd frontend
           npm install
           npm run build
 
+      # 4️⃣ Install backend dependencies
       - name: Install backend dependencies
         run: |
           cd backend
           npm install
 
+      # 5️⃣ Copy frontend build into backend folder
       - name: Copy frontend build into backend
         run: |
           cp -r frontend/build backend/
 
+      # 6️⃣ Login to Azure using Service Principal
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_E6D2403097DD4240B28BE64421955465 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_FE67D0F208E444BAB0E4B38DD528D724 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_598593F0BF8A4FA4BA02E8451FEB17F8 }}
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
 
+      # 7️⃣ Deploy backend (with React build) to Azure Web App
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
